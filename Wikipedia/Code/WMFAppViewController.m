@@ -1209,11 +1209,11 @@ NSString *const WMFLanguageVariantAlertsLibraryVersion = @"WMFLanguageVariantAle
             [self setSelectedIndex:WMFAppTabTypeMain];
             [self.currentTabNavigationController popToRootViewControllerAnimated:animated];
             break;
-        case WMFUserActivityTypePlaces: { // wikipedia://places?lat=52.315729&lon=4.665858$name=Cucu
+        case WMFUserActivityTypePlaces: {
             [self dismissPresentedViewControllers];
             [self setSelectedIndex:WMFAppTabTypePlaces];
             [self.currentTabNavigationController popToRootViewControllerAnimated:animated];
-            [self placesViewController].location = activity.location;
+            [[self placesViewController] setCustomLocationWithLocation: activity.location];
             NSURL *articleURL = activity.wmf_linkURL;
             if (articleURL) {
                 // For "View on a map" action to succeed, view mode has to be set to map.

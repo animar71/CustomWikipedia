@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 @class CLLocation;
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, WMFUserActivityType) {
@@ -20,7 +21,7 @@ extern NSString *const WMFNavigateToActivityNotification;
 
 @interface NSUserActivity (WMFExtensions)
 
-@property (nonatomic, strong) CLLocation *location;
+@property (nonatomic, strong, nullable) CLLocation *location;
 
 + (void)wmf_navigateToActivity:(NSUserActivity *)activity;
 + (void)wmf_makeActivityActive:(NSUserActivity *)activity;

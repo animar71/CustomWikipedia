@@ -23,7 +23,7 @@ static char kLocationKey;
     objc_setAssociatedObject(self, &kLocationKey, location, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CLLocation *)location {
+- (nullable CLLocation *)location {
     return objc_getAssociatedObject(self, &kLocationKey);
 }
 
@@ -75,7 +75,6 @@ static char kLocationKey;
 + (instancetype)wmf_placesActivityWithURL:(NSURL *)activityURL {
     NSURLComponents *components = [NSURLComponents componentsWithURL:activityURL resolvingAgainstBaseURL:NO];
     NSURL *articleURL = nil;
-    
     for (NSURLQueryItem *item in components.queryItems) {
         if ([item.name isEqualToString:@"WMFArticleURL"]) {
             NSString *articleURLString = item.value;

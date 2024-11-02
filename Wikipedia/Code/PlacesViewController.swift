@@ -18,7 +18,6 @@ class PlacesViewController: ViewController,
     fileprivate var mapView: MapView!
     var fakeProgressController: FakeProgressController!
     var listViewController: ArticleLocationCollectionViewController!
-    @objc var location: CLLocation?
 
     @IBOutlet weak var mapContainerView: UIView!
     @IBOutlet weak var redoSearchButton: UIButton!
@@ -80,6 +79,8 @@ class PlacesViewController: ViewController,
             return _displayCountForTopPlaces ?? 0
         }
     }
+    
+    fileprivate var customLocation: CLLocation?
 
     lazy fileprivate var placeSearchService: PlaceSearchService! = {
         return PlaceSearchService(dataStore: self.dataStore)
@@ -177,6 +178,7 @@ class PlacesViewController: ViewController,
         mapView.showsUserLocation = true
         mapView.isRotateEnabled = false
         mapView.isPitchEnabled = false
+        displayCustomLocation()
         
         mapContainerView.wmf_addSubviewWithConstraintsToEdges(mapView)
 
@@ -291,6 +293,26 @@ class PlacesViewController: ViewController,
             return true
         }
         return false
+    }
+    
+    @objc func setCustomLocation(location: CLLocation?) {
+        customLocation = location
+        if mapView != nil {
+            displayCustomLocation()
+        }
+    }
+    
+    fileprivate func displayCustomLocation() {
+        guard let customLocation else { return }
+        if let annotation = MapAnnotation(coordinate: customLocation.coordinate) {
+            let regionDelta: CLLocationDistance = 500
+            mapView.showsUserLocation = false
+            mapView.addAnnotation(annotation)
+            let region = MKCoordinateRegion(center: customLocation.coordinate, latitudinalMeters: regionDelta, longitudinalMeters: regionDelta)
+            mapView.setRegion(region, animated: true)
+        } else {
+            mapView.showsUserLocation = true
+        }
     }
 
     func selectVisibleKeyToSelectIfNecessary() {
