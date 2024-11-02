@@ -9,6 +9,9 @@ The official Wikipedia iOS app.
 * **Planning (bugs & features)**: https://phabricator.wikimedia.org/project/view/782/
 * **Team page**: https://www.mediawiki.org/wiki/Wikimedia_Apps/Team/iOS
 
+## Chnages for custom location deeplink
+In order to present the custom locations in the Places tab, one needs to use *"wikipedia://places/location?lat=\(latitudeDouble)&lon=\(longitudeDouble)"*. When this deep link is used, the app will parse the coodinates from the query parameters and save it in the *NSUserActivity* *WMFExtensions* extension as a nullable property called location of type *CLLocation*. Based on this property, in the *PlacesViewController* an annotatin is created with the extracted coordonates and displayes.
+
 ## Building and Running
 
 Note: Your Xcode version must be at least 16.0.
